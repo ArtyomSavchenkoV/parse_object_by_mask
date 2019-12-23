@@ -29,6 +29,7 @@ const checkData = (field, mask, isFillDefault, isReturnEmptyObjects) => {
     return undefined;
 };
 
+
 const parseArray = (arr=[], mask, isFillDefault, isReturnEmptyObjects) => {
     let result = isReturnEmptyObjects ? [] : undefined;
     for (let i in arr) {
@@ -40,6 +41,7 @@ const parseArray = (arr=[], mask, isFillDefault, isReturnEmptyObjects) => {
     }
     return result;
 };
+
 
 const parseObject = (obj={}, mask, isFillDefault, isReturnEmptyObjects) => {
     let result = isReturnEmptyObjects ? {} : undefined;
@@ -53,8 +55,21 @@ const parseObject = (obj={}, mask, isFillDefault, isReturnEmptyObjects) => {
     return result;
 };
 
+
+/**
+ * Create new object or array by the mask from the object or array of data.
+ *
+ * @param {object, array} The object or array of data for parsing by mask.
+ * @param {object, array} The mask object or array.
+ * @param {boolean} Using default values for empty fields. "false" - fill as "undefined". "true" - use the value from the mask.
+ * @param {boolean} Using empty object or array for undefined or not object or array fields. "false" - fill as "undefined".
+ * "true" - use empty object or array.
+ *
+ * @return {object, array} Produced result.
+ */
 const parseObjectByMask = (obj, mask, isFillDefault=true, isReturnEmptyObjects=false) => {
     return checkData(obj, mask, isFillDefault, isReturnEmptyObjects);
 };
+
 
 export default parseObjectByMask;
