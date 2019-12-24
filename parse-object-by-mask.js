@@ -14,6 +14,7 @@ const checkData = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 
     // fill final field
     } else {
+        //TODO: rewrite conditions
         if (
             field === undefined
             || (typeof field === 'function')
@@ -67,6 +68,7 @@ const parseObject = (obj={}, mask, isFillDefault, isReturnEmptyObjects) => {
  *
  * @return {object, array} Produced result.
  */
+//TODO: consider necessity for using "isReturnEmptyObjects" parameter. Probably this parameter merge with "isFillDefault"
 const parseObjectByMask = (obj, mask, isFillDefault=true, isReturnEmptyObjects=false) => {
     return checkData(obj, mask, isFillDefault, isReturnEmptyObjects);
 };
