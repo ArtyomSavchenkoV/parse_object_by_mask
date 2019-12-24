@@ -1,6 +1,9 @@
 {
   "name": "parse-object-by-mask",
   "version": "0.0.1",
+  "scripts": {
+    "test": "mocha *.test.js"
+  },
   "devDependencies": {
     "mocha": "^6.2.2"
   },
