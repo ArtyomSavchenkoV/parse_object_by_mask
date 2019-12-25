@@ -74,4 +74,4 @@ const parseObjectByMask = (obj, mask, isFillDefault=true, isReturnEmptyObjects=f
 };
 
 
-export default parseObjectByMask;
+exports.parseObjectByMask = parseObjectByMask;
