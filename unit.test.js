@@ -13,11 +13,18 @@ const startTest = (...params) => (expectedResult) => {
 const initialData = {
     onlyDataField: 'from data value', 
     commonField: 'from data value',
-    onlyDataObject: {
-        field: 'from data value'
+    notEmptyMaskObject: {
+        onlyDataField: 'from data value',
+        commonField: 'from data value'
     },
-    commonObject: {
-        field: 'from data value'
+    emptyMaskObject: {
+        onlyDataField: 'from data value',
+        commonField: 'from data value'
+    },
+    outerObject: {
+        middleObject: {
+            onlyDataField: 'from data value'
+        }
     }
 };
 
@@ -25,49 +32,119 @@ const initialData = {
 const mask = {
     commonField: 'from mask value', 
     onlyMaskField: 'from mask value',
-    commonObject: {
-        field: 'from mask value'
+    notEmptyMaskObject: {
+        commonField: 'from mask value',
+        onlyMaskField: 'from mask value'
     },
-    onlyMaskObject: {
-        field: 'from mask value'
+    emptyMaskObject: {},
+    outerObject: {
+        middleObject: {
+            onlyMaskField: 'from mask value'
+        }
     }
 };
 
 
 it("Test with default params.", function(){
-    //default function values:
-    //`const isFillDefault = true`
-    //`const isCreateEmptyObjects = false`
-     
-    const expectedResult = {
-            commonField: 'from data value',
-            onlyMaskField: 'from mask value',
-            commonObject: {
-                field: 'from data value'
-            },
-            onlyMaskObject: {
-                field: 'from mask value'
-            }
-        };
+    const isFillDefault = undefined; //default must be `true`
+    const isCreateEmptyObjects = undefined; //default must be `false`
 
-    startTest(initialData, mask/*, isFillDefault, isCreateEmptyObjects*/)(expectedResult);
+    const expectedResult = {
+        commonField: 'from data value',
+        onlyMaskField: 'from mask value',
+        notEmptyMaskObject: {
+            commonField: 'from data value',
+            onlyMaskField: 'from mask value'
+        },
+        emptyMaskObject: {},
+        outerObject: {
+            middleObject: {
+                onlyMaskField: 'from mask value'
+            }
+        }
+    };
+
+    startTest(initialData, mask, isFillDefault, isCreateEmptyObjects)(expectedResult);
 });
 
 
-it("Fill default, dont create empty objects. (default params)", function(){
-    const isFillDefault = true
-    const isCreateEmptyObjects = false
+it("Fill default, don't create empty objects. (default params)", function(){
+    const isFillDefault = true;
+    const isCreateEmptyObjects = false;
      
     const expectedResult = {
             commonField: 'from data value',
             onlyMaskField: 'from mask value',
-            commonObject: {
-                field: 'from data value'
+            notEmptyMaskObject: {
+                commonField: 'from data value',
+                onlyMaskField: 'from mask value'
             },
-            onlyMaskObject: {
-                field: 'from mask value'
+            emptyMaskObject: {},
+            outerObject: {
+                middleObject: {
+                    onlyMaskField: 'from mask value'
+                }
             }
         };
     
+    startTest(initialData, mask, isFillDefault, isCreateEmptyObjects)(expectedResult);
+});
+
+
+it("Fill default, create empty objects.", function(){
+
+    const isFillDefault = true;
+    const isCreateEmptyObjects = true;
+
+    const expectedResult = {
+        commonField: 'from data value',
+        onlyMaskField: 'from mask value',
+        notEmptyMaskObject: {
+            commonField: 'from data value',
+            onlyMaskField: 'from mask value'
+        },
+        emptyMaskObject: {},
+        outerObject: {
+            middleObject: {
+                onlyMaskField: 'from mask value'
+            }
+        }
+    };
+
+    startTest(initialData, mask, isFillDefault, isCreateEmptyObjects)(expectedResult);
+});
+
+
+it("Don't fill default, don't create empty objects.", function(){
+    const isFillDefault = false;
+    const isCreateEmptyObjects = false;
+
+    const expectedResult = {
+        commonField: 'from data value',
+        notEmptyMaskObject: {
+            commonField: 'from data value'
+        }
+    };
+
+    startTest(initialData, mask, isFillDefault, isCreateEmptyObjects)(expectedResult);
+});
+
+
+it("Don't fill default, create empty objects.", function(){
+
+    const isFillDefault = false;
+    const isCreateEmptyObjects = true;
+
+    const expectedResult = {
+        commonField: 'from data value',
+        notEmptyMaskObject: {
+            commonField: 'from data value'
+        },
+        emptyMaskObject: {},
+        outerObject: {
+            middleObject: {}
+        }
+    };
+
     startTest(initialData, mask, isFillDefault, isCreateEmptyObjects)(expectedResult);
 });
