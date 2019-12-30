@@ -5,7 +5,7 @@ const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
     // if object
     } else if (typeof mask === 'object' && mask !== null ) {
         return parseObject(field, mask, isFillDefault, isReturnEmptyObjects);
-    // fill final field
+    // if just field
     } else {
         return parseField(field, mask, isFillDefault, isReturnEmptyObjects);
     }
@@ -15,6 +15,21 @@ const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 const parseField = (field, mask, isFillDefault, isReturnEmptyObjects) => {
     //TODO: rewrite conditions
 	if (
+		typeof field === 'string' ||
+		typeof field === 'number' ||
+		typeof field === 'boolean' ||
+		typeof field === null
+	) {
+		return field;
+	} else {
+		if (isFillDefault) {
+			return mask;
+		} else {
+			return undefined;
+		}
+	}
+	//TODO: Delete the commented old code when new code completes tests successfully.
+	/*if (
 		field === undefined
 		|| (typeof field === 'function')
 		|| (typeof field === 'object' && field !== null )
@@ -24,7 +39,8 @@ const parseField = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 		}
 	} else {
 		return field;
-	}
+	}*/
+	
     return undefined;
 };
 
