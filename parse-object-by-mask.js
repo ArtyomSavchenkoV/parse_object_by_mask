@@ -2,7 +2,7 @@ const checkData = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 
     // if array
     if (typeof mask === 'object' && Array.isArray(mask)) {
-        if ((typeof field === 'object' && Array.isArray(field)) || isFillDefault) {
+        if ((typeof field === 'object' && Array.isArray(field)) || isFillDefault || isReturnEmptyObjects) {
             return parseArray(field, mask, isFillDefault, isReturnEmptyObjects);
         }
 
