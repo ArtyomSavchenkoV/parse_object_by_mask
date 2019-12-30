@@ -12,7 +12,7 @@ const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 };
 
 
-const parseField = (field, mask, isFillDefault, isReturnEmptyObjects) => {s
+const parseField = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 	if (
 		typeof field === 'string' ||
 		typeof field === 'number' ||
