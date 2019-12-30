@@ -18,7 +18,7 @@ const parseField = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 		typeof field === 'string' ||
 		typeof field === 'number' ||
 		typeof field === 'boolean' ||
-		typeof field === null
+		field === null
 	) {
 		return field;
 	} else {
