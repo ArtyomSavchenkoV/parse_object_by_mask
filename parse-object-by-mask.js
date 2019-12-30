@@ -31,8 +31,8 @@ const checkData = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 };
 
 
-const parseArray = (arr=[], mask, isFillDefault, isReturnEmptyObjects) => {
-    let result = isReturnEmptyObjects ? [] : undefined;
+const parseArray = (arr, mask, isFillDefault, isReturnEmptyObjects) => {
+    let result = isReturnEmptyObjects || isFillDefault ? [] : undefined;
     for (let i in arr) {
         const resultField = checkData(arr[i], mask[0], isFillDefault, isReturnEmptyObjects);
         if (resultField !== undefined) {
@@ -40,12 +40,17 @@ const parseArray = (arr=[], mask, isFillDefault, isReturnEmptyObjects) => {
             result = [...result, resultField];
         }
     }
+    if (Array.isArray(result) && isFillDefault) {
+        if (result.length === 0) {
+            result = [...mask];
+        }
+    }
     return result;
 };
 
 
-const parseObject = (obj={}, mask, isFillDefault, isReturnEmptyObjects) => {
-    let result = isReturnEmptyObjects ? {} : undefined;
+const parseObject = (obj, mask, isFillDefault, isReturnEmptyObjects) => {
+    let result = isReturnEmptyObjects || isFillDefault ? {} : undefined;
     for (let key in mask) {
         const resultField = checkData(obj[key], mask[key], isFillDefault, isReturnEmptyObjects);
         if (resultField !== undefined) {
