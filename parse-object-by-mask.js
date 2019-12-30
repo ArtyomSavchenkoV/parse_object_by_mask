@@ -2,9 +2,7 @@ const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 
     // if array
     if (typeof mask === 'object' && Array.isArray(mask)) {
-        if ((typeof field === 'object' && Array.isArray(field)) || isFillDefault || isReturnEmptyObjects) {
-            return parseArray(field, mask, isFillDefault, isReturnEmptyObjects);
-        }
+        return parseArray(field, mask, isFillDefault, isReturnEmptyObjects);
 
     // if object
     } else if (typeof mask === 'object' && mask !== null ) {
@@ -33,7 +31,8 @@ const parseField = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 };
 
 const parseArray = (arr, mask, isFillDefault, isReturnEmptyObjects) => {
-    let result = isReturnEmptyObjects || isFillDefault ? [] : undefined;
+    
+	let result = isReturnEmptyObjects || isFillDefault ? [] : undefined;
     for (let i in arr) {
         const resultField = dataHandler(arr[i], mask[0], isFillDefault, isReturnEmptyObjects);
         if (resultField !== undefined) {
