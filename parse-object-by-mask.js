@@ -1,4 +1,4 @@
-const checkData = (field, mask, isFillDefault, isReturnEmptyObjects) => {
+const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 
     // if array
     if (typeof mask === 'object' && Array.isArray(mask)) {
@@ -14,27 +14,31 @@ const checkData = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 
     // fill final field
     } else {
-        //TODO: rewrite conditions
-        if (
-            field === undefined
-            || (typeof field === 'function')
-            || (typeof field === 'object' && field !== null )
-        ) {
-            if (isFillDefault) {
-                return mask;
-            }
-        } else {
-            return field;
-        }
+        return parseField(field, mask, isFillDefault, isReturnEmptyObjects);
     }
     return undefined;
 };
 
+const parseField = (field, mask, isFillDefault, isReturnEmptyObjects) => {
+    //TODO: rewrite conditions
+	if (
+		field === undefined
+		|| (typeof field === 'function')
+		|| (typeof field === 'object' && field !== null )
+	) {
+		if (isFillDefault) {
+			return mask;
+		}
+	} else {
+		return field;
+	}
+    return undefined;
+};
 
 const parseArray = (arr, mask, isFillDefault, isReturnEmptyObjects) => {
     let result = isReturnEmptyObjects || isFillDefault ? [] : undefined;
     for (let i in arr) {
-        const resultField = checkData(arr[i], mask[0], isFillDefault, isReturnEmptyObjects);
+        const resultField = dataHandler(arr[i], mask[0], isFillDefault, isReturnEmptyObjects);
         if (resultField !== undefined) {
             result = result || [];
             result = [...result, resultField];
@@ -52,7 +56,7 @@ const parseArray = (arr, mask, isFillDefault, isReturnEmptyObjects) => {
 const parseObject = (obj, mask, isFillDefault, isReturnEmptyObjects) => {
     let result = isReturnEmptyObjects || isFillDefault ? {} : undefined;
     for (let key in mask) {
-        const resultField = checkData(obj[key], mask[key], isFillDefault, isReturnEmptyObjects);
+        const resultField = dataHandler(obj[key], mask[key], isFillDefault, isReturnEmptyObjects);
         if (resultField !== undefined) {
             result = result || {};
             result[key] = resultField;
@@ -75,7 +79,7 @@ const parseObject = (obj, mask, isFillDefault, isReturnEmptyObjects) => {
  */
 //TODO: consider necessity for using "isReturnEmptyObjects" parameter. Probably this parameter merge with "isFillDefault"
 const parseObjectByMask = (obj, mask, isFillDefault=true, isReturnEmptyObjects=false) => {
-    return checkData(obj, mask, isFillDefault, isReturnEmptyObjects);
+    return dataHandler(obj, mask, isFillDefault, isReturnEmptyObjects);
 };
 
 
