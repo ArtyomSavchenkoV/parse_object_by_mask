@@ -1,6 +1,6 @@
 const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
     // if array
-    if (typeof mask === 'object' && Array.isArray(mask)) {
+    if (Array.isArray(mask)) {
         return parseArray(field, mask, isFillDefault, isReturnEmptyObjects);
     // if object
     } else if (typeof mask === 'object' && mask !== null ) {
@@ -9,7 +9,6 @@ const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
     } else {
         return parseField(field, mask, isFillDefault, isReturnEmptyObjects);
     }
-    return undefined;
 };
 
 
