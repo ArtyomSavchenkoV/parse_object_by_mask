@@ -8,10 +8,7 @@ const dataHandler = (field, mask, isFillDefault, isReturnEmptyObjects) => {
 
     // if object
     } else if (typeof mask === 'object' && mask !== null ) {
-        if ((typeof field === 'object' && field !== null) || isFillDefault) {
-            return parseObject(field, mask, isFillDefault, isReturnEmptyObjects);
-        }
-
+        return parseObject(field, mask, isFillDefault, isReturnEmptyObjects);
     // fill final field
     } else {
         return parseField(field, mask, isFillDefault, isReturnEmptyObjects);
@@ -52,17 +49,21 @@ const parseArray = (arr, mask, isFillDefault, isReturnEmptyObjects) => {
     return result;
 };
 
-
+//TODO: Make code refactor
 const parseObject = (obj, mask, isFillDefault, isReturnEmptyObjects) => {
-    let result = isReturnEmptyObjects || isFillDefault ? {} : undefined;
-    for (let key in mask) {
-        const resultField = dataHandler(obj[key], mask[key], isFillDefault, isReturnEmptyObjects);
-        if (resultField !== undefined) {
-            result = result || {};
-            result[key] = resultField;
-        }
-    }
-    return result;
+	if ((typeof obj === 'object' && obj !== null) || isFillDefault)
+	{
+		let result = isReturnEmptyObjects || isFillDefault ? {} : undefined;
+		for (let key in mask) {
+			const resultField = dataHandler(obj[key], mask[key], isFillDefault, isReturnEmptyObjects);
+			if (resultField !== undefined) {
+				result = result || {};
+				result[key] = resultField;
+			}
+		}
+		return result;
+    } 
+    return undefined;
 };
 
 
